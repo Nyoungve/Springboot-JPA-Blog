@@ -4,11 +4,12 @@ import java.sql.Timestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.AllArgsConstructor;
@@ -38,9 +39,11 @@ public class User {
 	@Column(nullable = false, length = 50)
 	private String email; 
 	
-	@ColumnDefault("'user'")
-	private String role; //Enum을 쓰는게 좋다. (어떤 데이터의 도메인을 만들어 줄 수 있다. ) admin, user, manager각 페이지마다 권한을 주는 role.... 
-										// String이 아니라 Enum을 주게 되면 도메인...어떠한 범위를 정해서 각각의 권한을 줄 수 있게 된다. 
+	//@ColumnDefault("'user'") //이렇게 할 경우 테이블에 default 값으로 user 들어 간거 확인 됨... 주석.
+	//private String role; //Enum을 쓰는게 좋다. (어떤 데이터의 도메인을 만들어 줄 수 있다. ) admin, user, manager각 페이지마다 권한을 주는 role.... 
+	// String이 아니라 Enum을 주게 되면 도메인...어떠한 범위를 정해서 각각의 권한을 줄 수 있게 된다. 
+	@Enumerated(EnumType.STRING)
+	private RoleType role;
 	
 	@CreationTimestamp //시간이 자동 입력 된다. 
 	private Timestamp createDate;
